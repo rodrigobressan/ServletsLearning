@@ -15,10 +15,12 @@ public class PlaceSearch extends HttpServlet {
 		// TODO Auto-generated method stub
 	
 		PrintWriter writer = resp.getWriter();
+		String message = req.getParameter("message");
 		
 		writer.println("<html><body>");
-		writer.println("Get done!");
+		writer.println("Message received: " + message);
 		writer.println("</body></html>");
+		
 	}
 
 }
