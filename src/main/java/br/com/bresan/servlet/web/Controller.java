@@ -33,7 +33,7 @@ public class Controller extends HttpServlet {
 			
 			// create a new instance of this class
 			Class tarefaClass = Class.forName(className);
-			Tarefa tarefa = (Tarefa) tarefaClass.newInstance();
+			Task tarefa = (Task) tarefaClass.newInstance();
 			
 			// and then get the next page we should load (the method .process(Request, Response) returns it to us)
 			String nextPage = tarefa.process(req, resp);

@@ -10,7 +10,6 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @WebFilter(urlPatterns = "/*")
@@ -23,10 +22,9 @@ public class ServletFilter implements Filter {
 			throws IOException, ServletException {
 		
 		HttpServletRequest req = (HttpServletRequest) request;
-		HttpServletResponse resp = (HttpServletResponse) response;
 		
 		HttpSession session = req.getSession();
-		User user = (User) session.getAttribute("usuarioLogado");
+		User user = (User) session.getAttribute(Constants.SESSION_TAG);
 
 		String requestURI = req.getRequestURI();
 		
@@ -39,8 +37,7 @@ public class ServletFilter implements Filter {
 		chain.doFilter(request, response);
 	}
 
-	public void init(FilterConfig arg0) throws ServletException {
-		// TODO Auto-generated method stub
+	public void init(FilterConfig filterConfig) throws ServletException {
 		
 	}
 }
