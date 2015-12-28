@@ -2,6 +2,7 @@ package br.com.bresan.servlet.web;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,5 +17,8 @@ public class Logout extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session = req.getSession();
 		session.invalidate();
+		
+		RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/paginas/logout.jsp");
+		dispatcher.forward(req, resp);
 	}
 }
