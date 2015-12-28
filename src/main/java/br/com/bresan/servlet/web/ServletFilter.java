@@ -9,10 +9,13 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.tomcat.util.http.Cookies;
+
 @WebFilter(urlPatterns = "/*")
-public class PlaceFilter implements Filter {
+public class ServletFilter implements Filter {
 
 	public void destroy() {
 	}
@@ -24,9 +27,27 @@ public class PlaceFilter implements Filter {
 		
 		String requestURI = req.getRequestURI();
 		
-		System.out.println("Página acessada: " + requestURI);
+		String usuario = getUsuario(req);
+		
+		System.out.println("Página acessada: " + requestURI + " pelo usuário " + usuario);
 		
 		chain.doFilter(request, response);
+	}
+
+	private String getUsuario(HttpServletRequest req) {
+		Cookie[] cookies = req.getCookies();
+		String usuario = "<deslogado>";
+		
+		if (cookies == null) {
+			return usuario;
+		}
+		
+		for (Cookie cookie : cookies) {
+			if (cookie.getName().equals("usuario.logado")) {
+				usuario = cookie.getValue();
+			}
+		}
+		return usuario;
 	}
 
 	public void init(FilterConfig arg0) throws ServletException {
