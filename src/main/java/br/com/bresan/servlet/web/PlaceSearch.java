@@ -2,6 +2,7 @@ package br.com.bresan.servlet.web;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -27,9 +28,14 @@ public class PlaceSearch extends HttpServlet {
 		PrintWriter writer = resp.getWriter();
 		String message = req.getParameter("message");
 		
-		writer.println("<html><body>");
-		writer.println("Message received: " + message);
-		writer.println("</body></html>");
+		Place place = new Place();
+		place.name = message;
+		
+		req.setAttribute("message", place);
+		
+		RequestDispatcher requestDispatcher = req.getRequestDispatcher("WEB-INF/paginas/search.jsp");
+		requestDispatcher.forward(req, resp);
+		
 	}
 
 }
