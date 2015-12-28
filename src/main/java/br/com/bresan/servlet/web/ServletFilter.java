@@ -9,12 +9,9 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.ws.Response;
-
-import org.apache.tomcat.util.http.Cookies;
+import javax.servlet.http.HttpSession;
 
 @WebFilter(urlPatterns = "/*")
 public class ServletFilter implements Filter {
@@ -28,31 +25,18 @@ public class ServletFilter implements Filter {
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse resp = (HttpServletResponse) response;
 		
+		HttpSession session = req.getSession();
+		User user = (User) session.getAttribute("usuario.logado");
+
 		String requestURI = req.getRequestURI();
 		
-		String usuario = getUsuario(req, resp);
-		
-		System.out.println("Página acessada: " + requestURI + " pelo usuário " + usuario);
+		if (user != null) {
+			System.out.println("Página acessada: " + requestURI + " pelo usuário " + user.email);
+		} else {
+			System.out.println("Página acessada: " + requestURI);
+		}
 		
 		chain.doFilter(request, response);
-	}
-
-	private String getUsuario(HttpServletRequest req, HttpServletResponse resp) {
-		Cookie[] cookies = req.getCookies();
-		String usuario = "<deslogado>";
-		
-		if (cookies == null) {
-			return usuario;
-		}
-		
-		for (Cookie cookie : cookies) {
-			if (cookie.getName().equals("usuario.logado")) {
-				//cookie.setMaxAge(10 * 60);
-				//resp.addCookie(cookie);
-				usuario = cookie.getValue();
-			}
-		}
-		return usuario;
 	}
 
 	public void init(FilterConfig arg0) throws ServletException {

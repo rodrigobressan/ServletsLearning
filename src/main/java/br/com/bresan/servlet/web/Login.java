@@ -5,10 +5,10 @@ import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @WebServlet(urlPatterns="/login")
 public class Login extends HttpServlet {
@@ -27,9 +27,11 @@ public class Login extends HttpServlet {
 		if (user.equals(validUser) && password.equals(validPassword)) {
 			writer.print("Usuário válido");
 			
-			Cookie cookie = new Cookie("usuario.logado", user);
-			cookie.setMaxAge(10 * 60);
-			resp.addCookie(cookie);
+			User currentUser = new User();
+			currentUser.email = user;
+			
+			HttpSession session = req.getSession();
+			session.setAttribute("usuario.logado", currentUser);
 		} else {
 			writer.print("Usuário inválido");
 		}
