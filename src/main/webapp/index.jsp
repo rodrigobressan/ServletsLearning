@@ -18,6 +18,13 @@
 		<input type="password" name="password">
 		<input type="submit" value="Enviar">
 	</form>
-
+	
+	<br/>
+	<br/>
+	Logout
+	<br/>
+	<form action="logout" method="POST">
+		<input type="submit" value="Enviar">
+	</form>
 </body>
 </html>
