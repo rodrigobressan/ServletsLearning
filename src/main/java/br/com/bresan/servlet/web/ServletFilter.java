@@ -26,7 +26,7 @@ public class ServletFilter implements Filter {
 		HttpServletResponse resp = (HttpServletResponse) response;
 		
 		HttpSession session = req.getSession();
-		User user = (User) session.getAttribute("usuario.logado");
+		User user = (User) session.getAttribute("usuarioLogado");
 
 		String requestURI = req.getRequestURI();
 		

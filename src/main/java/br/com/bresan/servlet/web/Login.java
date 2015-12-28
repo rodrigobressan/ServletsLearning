@@ -31,7 +31,7 @@ public class Login extends HttpServlet {
 			currentUser.email = user;
 			
 			HttpSession session = req.getSession();
-			session.setAttribute("usuario.logado", currentUser);
+			session.setAttribute("usuarioLogado", currentUser);
 		} else {
 			writer.print("Usuário inválido");
 		}

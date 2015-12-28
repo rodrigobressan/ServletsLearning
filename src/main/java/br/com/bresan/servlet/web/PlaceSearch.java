@@ -10,22 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @WebServlet(urlPatterns = "/places")
-public class PlaceSearch extends HttpServlet {
+public class PlaceSearch implements Tarefa {
 	
-	/*@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		PrintWriter writer = resp.getWriter();
-		String message = req.getParameter("message");
-		
-		writer.println("<html><body>");
-		writer.println("Message received: " + message);
-		writer.println("</body></html>");
-		
-	}*/
-	
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		PrintWriter writer = resp.getWriter();
+	public String process(HttpServletRequest req, HttpServletResponse resp) {
 		String message = req.getParameter("message");
 		
 		Place place = new Place();
@@ -33,9 +20,7 @@ public class PlaceSearch extends HttpServlet {
 		
 		req.setAttribute("message", place);
 		
-		RequestDispatcher requestDispatcher = req.getRequestDispatcher("WEB-INF/paginas/search.jsp");
-		requestDispatcher.forward(req, resp);
-		
+		return "WEB-INF/paginas/search.jsp";
 	}
 
 }
